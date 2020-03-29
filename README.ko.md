@@ -17,7 +17,7 @@
 	python setup.py install
   ```
 
-- PYPI 설치 (TBD)
+- PYPI 설치
 
   ```
 	pip install baruda
