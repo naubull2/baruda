@@ -32,7 +32,7 @@ def conv_hcj(ch):
     try:
         return unicodedata.lookup(unicode_names)
     except Exception:
-        logging.warning(f'Warning: Invalid Hangul Jamo "{ch}"')
+        logging.warning('Warning: Invalid Hangul Jamo "{}"'.format(ch))
     return ch
 
 
@@ -211,7 +211,7 @@ class _Jamo(object):
 
             self.compat_jamos = output
         except Exception as e:
-            raise ValueError(f'Invalid synthesis : {str(e)}')
+            raise ValueError('Invalid synthesis : {}'.format(str(e)))
 
     def infrequent_jongseong(self):
         """Return true if the data has an infrequent Jongseong
