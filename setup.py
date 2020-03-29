@@ -27,6 +27,7 @@ setup(
     maintainer=about['__maintainer__'],
     maintainer_email=about['__maintainer_email__'],
     url='https://github.com/naubull2/baruda',
+    download_url='https://pypi.org/project/baruda/',
     description='Fix and normalize Korean Jamo typos',
     long_description_content_type="text/markdown",
     long_description=README + '\n\n' + HISTORY,
@@ -35,7 +36,7 @@ setup(
     zip_safe=False,
     keywords=['Korean', 'Hangul', 'Jamo'],
     classifiers=[
-        'Development Status :: 1 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: BSD License',
