@@ -1,7 +1,7 @@
 # Baruda
-[![Build Status](
-  https://travis-ci.com/naubull2/Baruda.svg?branch=master 
-)](https://travis-ci.com/naubull2/Baruda)
+[![Python package](
+  https://github.com/naubull2/baruda/actions?query=workflow%3A%22Python+package%22
+)](https://github.com/naubull2/baruda/workflows/Python%20package/badge.svg?branch=master)
 [![README in English](
   https://img.shields.io/badge/readme-english-blue.svg?style=flat
 )](README.md)
