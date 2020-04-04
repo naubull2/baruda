@@ -56,11 +56,12 @@ def conv_hj(ch, code=None):
         elif code and 'JONGSEONG' in unicode_names:
             unicode_names = unicode_names.replace('JONGSEONG', code)
 
-    except Exception:
-        return ch
+        ch = unicodedata.lookup(unicode_names)
 
+    except Exception as e:
+        raise ValueError('Invalid synthesis : {}'.format(str(e)))
     else:
-        return unicodedata.lookup(unicode_names)
+        return ch
 
 
 def string2jamo(string, letter=False):
@@ -203,7 +204,7 @@ class _Jamo(object):
                             output.append(conv_hj(curr_val, 'JONGSEONG'))
                             i += 1
                             continue
-                    elif 'LETTER' in next_code and next_val in JUNGSEONG_LIST and \
+                    elif 'LETTER' in next_code and next_val in JUNGSEONG_LIST and curr_val in CHOSEONG_LIST and \
                          not ('JONGSEONG' in code_name and next_val in self.special_jungseong):
                         output.append(conv_hj(curr_val, 'CHOSEONG'))
                         output.append(conv_hj(next_val, 'JUNGSEONG'))
