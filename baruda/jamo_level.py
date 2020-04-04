@@ -2,7 +2,7 @@
 """
   jamo_level.py
   ~~~~~~~~~~~~~
-  Hangul(Korean letter) convert, decompose and recompose function utils.k
+  Hangul(Korean letter) convert, decompose and recompose function utils
 
   :copyright: (c) 2020- by naubull2
   :license: BSD, view LICENSE for more details.
@@ -122,6 +122,10 @@ def jamo2string(jamo_string):
 class _Jamo(object):
     """Internal object for recomposition of Hangul phrases and sentences
     """
+    # NOTE: These jungseong can mean special memes online
+    # 'ㅠ'|'ㅜ' : Used for representing crying face
+    # 'ㅗ' : Used inplace of the "that-F**-word-you-know".
+    special_jungseong = {'ㅠ', 'ㅜ', 'ㅗ'}
     def __init__(self, string):
         self.origin = string
         self.jamos = list()
@@ -150,6 +154,9 @@ class _Jamo(object):
                 pass
             elif 'JUNGSEONG' in last_code and last_val == curr_val and 'LETTER' in code_name:
                 continue
+            elif 'JUNGSEONG' in last_code and curr_val in JUNGSEONG_LIST and \
+                 curr_val not in self.special_jungseong:
+                continue
             else:
                 if last_c:
                     output.append(last_c)
@@ -163,6 +170,8 @@ class _Jamo(object):
 
         if last_c:
             output.append(last_c)
+            if add_twice:
+                output.append(last_c)
 
         self.compat_jamos = output
 
@@ -189,16 +198,17 @@ class _Jamo(object):
                         j += 1
                     next_code = unicodedata.name(self.compat_jamos[j])
                     next_val = conv_hcj(self.compat_jamos[j])
-                    if 'LETTER' in next_code and next_val in JUNGSEONG_LIST:
-                        output.append(conv_hj(curr_val, 'CHOSEONG'))
-                        output.append(conv_hj(next_val, 'JUNGSEONG'))
-                        i = j + 1
-                        continue
-                    elif 'LETTER' in next_code and any(next_val in L for L in CONSONANTS) and curr_val != next_val:
+                    if 'LETTER' in next_code and any(next_val in L for L in CONSONANTS) and curr_val != next_val:
                         if output and 'JUNGSEONG' in unicodedata.name(output[-1]) and curr_val in JONGSEONG_LIST:
                             output.append(conv_hj(curr_val, 'JONGSEONG'))
                             i += 1
                             continue
+                    elif 'LETTER' in next_code and next_val in JUNGSEONG_LIST and \
+                         not ('JONGSEONG' in code_name and next_val in self.special_jungseong):
+                        output.append(conv_hj(curr_val, 'CHOSEONG'))
+                        output.append(conv_hj(next_val, 'JUNGSEONG'))
+                        i = j + 1
+                        continue
                     elif 'CHOSEONG' in next_code:
                         if output and 'JUNGSEONG' in unicodedata.name(output[-1]) and curr_val in JONGSEONG_LIST:
                             output.append(conv_hj(curr_val, 'JONGSEONG'))
